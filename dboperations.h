@@ -17,7 +17,7 @@ void searchBy();
 account* searchFor(char type[], ...);
 int searchingStrings(char searchWhat[]);
 int searchingNumbers(char searchWhat[]);
-int fsearch(FILE* data, unsigned long accNumber);
+int fsearch(FILE* data, unsigned long long accNumber);
 int confirm();
 
 #endif

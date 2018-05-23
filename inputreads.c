@@ -53,7 +53,7 @@ void readString(char string[])
 	strcpy(string, buffer);
 }
 
-void readMoney(unsigned long* balance)
+void readMoney(unsigned long long* balance)
 {
 	char balBuffer[LONG_BUFFER];
 	size_t size;
@@ -130,13 +130,13 @@ void readMoney(unsigned long* balance)
 	}
 }
 
-void readNumber(unsigned long* number)
+void readNumber(unsigned long long* number)
 {
-	unsigned long buffer;
+	unsigned long long buffer;
 	do
 	{
 		__fpurge(stdin);
-		if(scanf("%lu", &buffer)) 
+		if(scanf("%llu", &buffer)) 
 			break;
 		else
 			printf("Invalid input. Enter positive number.\nType again: ");
@@ -145,16 +145,16 @@ void readNumber(unsigned long* number)
 	*number = buffer;
 }
 
-void readPesel(unsigned long* pesel)
+void readPesel(unsigned long long* pesel)
 {
-	unsigned long buffer;
+	unsigned long long buffer;
 	int check;
 
 	do
 	{
 		check = 0;
 		readNumber(&buffer);
-		int digit = (int)(buffer / pow(10, 10));
+		int digit = (int)(buffer / 10000000000);
 		if(digit > 0 && digit < 10)
 			break;
 		else
@@ -237,7 +237,7 @@ void readAddress(char address[])
 	strcpy(address, buffer);
 }
 
-int moneyIO(char operation, unsigned long accNumber, unsigned long amount)
+int moneyIO(char operation, unsigned long long accNumber, unsigned long long amount)
 {
 	account current;
 	FILE *data = fopen("data.dat", "rb+");
@@ -270,8 +270,8 @@ int moneyIO(char operation, unsigned long accNumber, unsigned long amount)
 	return 1;
 }
 
-char* balanceToStr(char* string, unsigned long number)
+char* balanceToStr(char* string, unsigned long long number)
 {
-	sprintf(string, "%lu.%lu", number / 100, number % 100);
+	sprintf(string, "%llu.%llu", number / 100, number % 100);
 	return string;
 }

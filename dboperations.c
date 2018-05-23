@@ -120,18 +120,18 @@ void showInformationAll()
 void showInformation(account current)
 {
 	char balBuffer[LONG_BUFFER];
-	printf("\nAccount Number: %ld", current.accountNumber);
+	printf("\nAccount Number: %lld", current.accountNumber);
 	printf("\nName: %s", current.name);
 	printf("\nLast name: %s", current.lastName);
-	printf("\nPESEL: %ld", current.pesel);
+	printf("\nPESEL: %lld", current.pesel);
 	printf("\nAddress: %s", current.address);
 	printf("\nBalance: %s\n", balanceToStr(balBuffer, current.balance));
 }
 
 void deposit()
 {
-	unsigned long amount;
-	unsigned long accNumber;
+	unsigned long long amount;
+	unsigned long long accNumber;
 
 	FILE *data = fopen("data.dat", "rb");
 	while(1)
@@ -141,6 +141,8 @@ void deposit()
 		readNumber(&accNumber);
 		if(fsearch(data, accNumber))
 			break;
+		else if(accNumber == 0)
+			return;
 		else
 			printf("Account not found.\n");
 	}
@@ -155,8 +157,8 @@ void deposit()
 
 void withdraw()
 {
-	unsigned long amount;
-	unsigned long accNumber;
+	unsigned long long amount;
+	unsigned long long accNumber;
 
 	FILE *data = fopen("data.dat", "rb");
 	while(1)
@@ -166,6 +168,8 @@ void withdraw()
 		readNumber(&accNumber);
 		if(fsearch(data, accNumber))
 			break;
+		else if(accNumber == 0)
+			return;
 		else
 			printf("Account not found.\n");
 	}
@@ -180,8 +184,8 @@ void withdraw()
 
 void transfer()
 {
-	unsigned long amount;
-	unsigned long accNumber1, accNumber2;
+	unsigned long long amount;
+	unsigned long long accNumber1, accNumber2;
 
 	FILE *data = fopen("data.dat", "rb");
 	while(1)
@@ -191,6 +195,8 @@ void transfer()
 		readNumber(&accNumber1);
 		if(fsearch(data, accNumber1))
 			break;
+		else if(accNumber1 == 0)
+			return;
 		else
 			printf("Account not found.\n");
 	}
@@ -207,6 +213,8 @@ void transfer()
 		}
 		if(fsearch(data, accNumber2))
 			break;
+		else if(accNumber2 == 0)
+			return;
 		else
 			printf("Account not found.\n");
 	}
@@ -260,7 +268,7 @@ void searchBy()
 
 	while(1)
 	{
-		readNumber((unsigned long*)&choice);
+		readNumber((unsigned long long*)&choice);
 		if(choice > 0 && choice < 8)
 			break;
 		else
@@ -295,7 +303,7 @@ void searchBy()
 
 int searchingNumbers(char searchWhat[])
 {
-	unsigned long number;
+	unsigned long long number;
 	char balBuffer[LONG_BUFFER];
 	account* currents;
 
@@ -313,7 +321,7 @@ int searchingNumbers(char searchWhat[])
 		if(strcmp(searchWhat, "balance") == 0)
 			printf("No person with %s %s found.\n", searchWhat, balanceToStr(balBuffer, number));
 		else
-			printf("No person with %s %ld found.\n", searchWhat, number);
+			printf("No person with %s %lld found.\n", searchWhat, number);
 		free(currents);
 		return 0;
 	}
@@ -389,7 +397,7 @@ account* searchFor(char type[], ...)
 				{
 					size++;
 					currents = (account*)realloc(currents, sizeof(account)*size);
-					currents[0].accountNumber = (unsigned long)size;
+					currents[0].accountNumber = (unsigned long long)size;
 					currents[size - 1] = current;
 				}
 			}
@@ -399,7 +407,7 @@ account* searchFor(char type[], ...)
 				{
 					size++;
 					currents = (account*)realloc(currents, sizeof(account)*size);
-					currents[0].accountNumber = (unsigned long)size;
+					currents[0].accountNumber = (unsigned long long)size;
 					currents[size - 1] = current;
 				}
 			}
@@ -409,7 +417,7 @@ account* searchFor(char type[], ...)
 				{
 					size++;
 					currents = (account*)realloc(currents, sizeof(account)*size);
-					currents[0].accountNumber = (unsigned long)size;
+					currents[0].accountNumber = (unsigned long long)size;
 					currents[size - 1] = current;
 				}
 			}
@@ -423,7 +431,7 @@ account* searchFor(char type[], ...)
 				{
 					size++;
 					currents = (account*)realloc(currents, sizeof(account)*size);
-					currents[0].accountNumber = (unsigned long)size;
+					currents[0].accountNumber = (unsigned long long)size;
 					currents[size - 1] = current;
 				}
 			}
@@ -433,7 +441,7 @@ account* searchFor(char type[], ...)
 				{
 					size++;
 					currents = (account*)realloc(currents, sizeof(account)*size);
-					currents[0].accountNumber = (unsigned long)size;
+					currents[0].accountNumber = (unsigned long long)size;
 					currents[size - 1] = current;
 				}
 			}
@@ -447,7 +455,7 @@ account* searchFor(char type[], ...)
 				{
 					size++;
 					currents = (account*)realloc(currents, sizeof(account)*size);
-					currents[0].accountNumber = (unsigned long)size;
+					currents[0].accountNumber = (unsigned long long)size;
 					currents[size - 1] = current;
 				}
 			}
@@ -457,7 +465,7 @@ account* searchFor(char type[], ...)
 				{
 					size++;
 					currents = (account*)realloc(currents, sizeof(account)*size);
-					currents[0].accountNumber = (unsigned long)size;
+					currents[0].accountNumber = (unsigned long long)size;
 					currents[size - 1] = current;
 				}
 			}
@@ -471,7 +479,7 @@ account* searchFor(char type[], ...)
 		return currents;
 }
 
-int fsearch(FILE* data, unsigned long accNumber)
+int fsearch(FILE* data, unsigned long long accNumber)
 {
 	rewind(data);
 	account current;
